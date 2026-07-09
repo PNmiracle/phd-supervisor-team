@@ -1,0 +1,74 @@
+{
+  "name": "phd-supervisor-team",
+  "version": "1.1.0",
+  "description": "PhD Supervisor Selection Workgroup: a two-phase collaborative team that first builds verifiable supervisor lists via the selector agent, then runs adversarial quality audit via the auditor agent. Includes automated 6-dimension audit scripts (field completeness, match confidence, link validity, email compliance, AI artefacts, selection intent protection) and 1+1 workflow dispatcher for Feishu Bitable task management. Powered by phd-supervisor-selector and supervisor-audit skills.",
+  "author": {
+    "name": "WorkBuddy User",
+    "email": ""
+  },
+  "agents": [
+    "./agents/phd-supervisor-team-team-lead.md",
+    "./agents/phd-supervisor-agent.md",
+    "./agents/supervisor-auditor.md"
+  ],
+
+  "expertType": "team",
+  "agentName": "phd-supervisor-team-team-lead",
+  "teamInfo": {
+    "leadAgent": "phd-supervisor-team-team-lead",
+    "memberAgents": ["phd-supervisor-agent", "supervisor-auditor"]
+  },
+
+  "displayName": {
+    "en": "PhD Supervisor Selection Workgroup",
+    "zh": "博士选导工作组"
+  },
+  "profession": {
+    "en": "PhD Supervisor Selection Workgroup",
+    "zh": "博士选导工作组"
+  },
+  "displayDescription": {
+    "en": "A collaborative two-phase team: first builds a verified PhD supervisor list, then runs adversarial audit for quality assurance. One-click for complete workflow.",
+    "zh": "两阶段协作团队，先建立可核验博士导师列表，再对抗性审核质量保障，一键完成从搜索到审核的完整流程。"
+  },
+  "avatar": "avatars/team.png",
+  "categoryId": "12-IndustryConsultant",
+  "defaultInitPrompt": {
+    "zh": "帮我为一个博士申请人完成完整的选导流程：先筛选导师建立列表，再进行质量审核。我会提供学生背景、目标学校和方向。",
+    "en": "Complete the full PhD supervisor selection workflow for an applicant: first build the supervisor list, then audit it for quality. I'll provide the student background, target schools, and research direction."
+  },
+  "plugin": "phd-supervisor-team",
+  "tags": [
+    { "en": "PhD Supervisor", "zh": "博士选导" },
+    { "en": "Quality Audit", "zh": "质量审核" },
+    { "en": "Study Abroad", "zh": "留学规划" }
+  ],
+  "quickPrompts": [
+    { "en": "Complete the full PhD supervisor selection workflow for an applicant: first build the supervisor list, then audit it for quality. I'll provide the student background, target schools, and research direction.", "zh": "帮我为一个博士申请人完成完整的选导流程：先筛选导师建立列表，再进行质量审核。我会提供学生背景、目标学校和方向。" },
+    { "en": "Build a supervisor list for this Computer Science applicant targeting US TOP30 schools, then run a full adversarial audit on the results.", "zh": "为该计算机科学方向的学生筛选美国TOP30的博士导师并建立列表，然后对结果进行完整对抗审核。" },
+    { "en": "Audit the existing supervisor list in this Vika table, flag all issues by severity, and provide actionable fixes for each problem.", "zh": "审核这份Vika选导表中的现有导师列表，按严重程度分级标注问题并给出修正建议。" }
+  ],
+  "members": [
+    {
+      "id": "phd-supervisor-team-team-lead",
+      "displayName": { "en": "Workgroup Lead", "zh": "工作组主理人" },
+      "profession": { "en": "Workgroup Lead", "zh": "工作组主理人" },
+      "avatar": "avatars/phd-supervisor-team-team-lead.png",
+      "role": "lead"
+    },
+    {
+      "id": "phd-supervisor-agent",
+      "displayName": { "en": "PhD Supervisor Selector", "zh": "博士选导顾问" },
+      "profession": { "en": "PhD Supervisor Selection Consultant", "zh": "博士选导顾问" },
+      "avatar": "avatars/phd-supervisor-agent.png",
+      "role": "member"
+    },
+    {
+      "id": "supervisor-auditor",
+      "displayName": { "en": "Supervisor List Auditor", "zh": "选导表审核官" },
+      "profession": { "en": "PhD Supervisor List Quality Auditor", "zh": "博士选导表质量审核师" },
+      "avatar": "avatars/supervisor-auditor.png",
+      "role": "member"
+    }
+  ]
+}
