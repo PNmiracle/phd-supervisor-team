@@ -1,44 +1,56 @@
-# Phd Supervisor Team
+# 博士选导工作组
 
-[TODO: 一句话描述]
+两阶段协作专家团：先由选导顾问建立可核验的博士导师列表，再由审核官进行对抗性质量审核。一键从搜索到交付。
 
 ## 类型
 
-Team 型（多角色协作团队）
+**Team 型（3 角色协作）**
 
-## 功能
+| 角色 | 职责 |
+|------|------|
+| 主理人 | 编排调度，串起完整流程，汇总最终报告 |
+| 选导顾问 | 搜索导师、验证资质、填写 Vika 选导表 |
+| 审核官 | 对抗性审核，6 维度自动化审计 + 偷懒检测 |
 
-[TODO: 详细功能说明]
+## 前置依赖
 
-## 使用示例
-
-- [TODO: 示例提示词1]
-- [TODO: 示例提示词2]
-- [TODO: 示例提示词3]
-
-## 头像
-
-头像已自动生成在 `avatars/` 目录下。如需替换为自定义头像，要求：
-- 格式：PNG（推荐）或 JPG
-- 尺寸：512×512 px
-- 大小：单张不超过 500KB
+本专家团依赖 `phd-supervisor-selector` skill（搜索规则、填表规范、学校策略等）。
 
 ## 安装
 
-将专家包目录放到专家目录下：
-
-```
-/Users/chengxinzhi/.workbuddy/plugins/marketplaces/my-experts/plugins/phd-supervisor-team/
-```
-
-然后运行注册命令使其可见：
-
 ```bash
-python3 scripts/register_expert.py <expert-dir>
+# 1. 安装前置 skill
+gh repo clone PNmiracle/phd-supervisor-selector ~/.workbuddy/skills/phd-supervisor-selector
+
+# 2. 安装本专家团
+gh repo clone PNmiracle/phd-supervisor-team ~/.workbuddy/plugins/marketplaces/my-experts/plugins/phd-supervisor-team
 ```
 
-## 打包分享
+重启 WorkBuddy 后，在专家列表选择「博士选导工作组」。
 
-```bash
-zip -r phd-supervisor-team.zip phd-supervisor-team/
-```
+## 功能
+
+### 选导顾问
+- 各大学官网搜索导师 → 打开个人主页验证 → 排除退休/名誉/访问教授
+- 研究方向与学生背景交叉匹配 + 三段式备注（职称 / 研究方向 / 匹配度）
+- Vika 在线表格 CRUD（新增/修改/删除/补充字段）
+- 国内学校特殊流程：百度搜索、邮箱必填、招生目录优先
+- 写入前逐项自检（飞行前清单），不合格拒绝写入
+- 防偷懒协议：禁止猜测 URL、禁止研究生院首页、禁止多校共用链接
+
+### 审核官
+- **6 维度自动化审计**：必填字段完整性、匹配置信度（≥95%）、链接有效性（≥95%）、国内邮箱（100%）、AI 痕迹检测、选导意向保护
+- **偷懒行为专项检测**：独立于正确性，检测捷径行为
+- **置信度双门槛**：链接 ≥95% **且** 匹配 ≥95% 才能通过
+- P0 / P1 / P2 分级问题报告 + 可操作修正建议
+
+### 自动化工具
+- `run_1plus1.py` — 1+1 工作流调度，对接飞书 Bitable
+- `audit_state.py` — 独立 6 维度审计引擎
+- `state_machine.py` — 飞书任务状态管理
+
+## 使用示例
+
+- 「帮我为一个博士申请人完成完整的选导流程：先筛选导师建立列表，再进行质量审核。我会提供学生背景、目标学校和方向。」
+- 「为该计算机科学方向的学生筛选美国 TOP30 的博士导师并建立列表，然后对结果进行完整对抗审核。」
+- 「审核这份 Vika 选导表中的现有导师列表，按严重程度分级标注问题并给出修正建议。」
