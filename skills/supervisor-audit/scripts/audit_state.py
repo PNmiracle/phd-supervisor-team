@@ -89,15 +89,20 @@ EMOJI_RANGES = [
 
 
 def _load_records(datasheet_id, token):
-    """Load all records from a Vika datasheet via Fusion API."""
+    """Load all records from a Vika datasheet via Fusion API.
+
+    NOTE (2026-08-05 fix): Vika Fusion API paginates via `pageNum`/`pageSize`
+    and reports `total`; it does NOT return `hasMore`/`pageToken`. The old
+    implementation only read the first page (200 records), which produced
+    wrong audit results on tables with >200 records. Fixed to iterate pageNum
+    until all records are collected.
+    """
     base = f"https://api.vika.cn/fusion/v1/datasheets/{datasheet_id}/records"
     all_records = []
-    page_token = None
+    page_num = 1
 
     while True:
-        params = {"pageSize": 200, "fieldKey": "name"}
-        if page_token:
-            params["pageToken"] = page_token
+        params = {"pageSize": 200, "pageNum": page_num, "fieldKey": "name", "cellFormat": "string"}
         qs = "&".join(f"{k}={urllib.parse.quote(str(v))}" for k, v in params.items())
         req = urllib.request.Request(
             f"{base}?{qs}",
@@ -107,9 +112,10 @@ def _load_records(datasheet_id, token):
         data = resp.get("data", {})
         items = data.get("records", [])
         all_records.extend(items)
-        if not data.get("hasMore", data.get("has_more", False)):
+        total = data.get("total", 0)
+        if len(all_records) >= total or not items:
             break
-        page_token = data.get("pageToken", data.get("page_token"))
+        page_num += 1
 
     return all_records
 
@@ -192,6 +198,15 @@ def _is_field_empty(value):
     return str(value).strip() == ""
 
 
+def _school_name(f):
+    """Get school name from a record's fields, tolerating both column names.
+
+    NOTE (2026-08-05 fix): actual tables name the column 「学校」 while older
+    versions of this script assumed 「学校名字」. Fall back gracefully.
+    """
+    return f.get("学校名字", f.get("学校", ""))
+
+
 def _check_required_fields(record):
     """
     Check required-field completeness for a single record.
@@ -201,9 +216,14 @@ def _check_required_fields(record):
     """
     f = record.get("fields", {})
     missing = []
-    school = f.get("学校名字", "")
+    school = _school_name(f)
 
     for field in REQUIRED_FIELDS_UNIVERSAL:
+        # 学校字段兼容「学校名字」/「学校」两种列名（2026-08-05 fix）
+        if field == "学校名字":
+            if _is_field_empty(_school_name(f)):
+                missing.append(field)
+            continue
         if _is_field_empty(f.get(field)):
             missing.append(field)
 
@@ -327,7 +347,7 @@ def audit(datasheet_id, token, max_links_check=LINK_SAMPLE_SIZE):
     for r in records:
         f = r.get("fields", {})
         url = f.get("导师主页", "")
-        school = f.get("学校名字", "")
+        school = _school_name(f)
         email_field = f.get("导师联系方式", "")
         remark = f.get("备注", "")
         selection_intent = f.get("选导意向（点击选择）", f.get("选导意向", ""))
@@ -513,7 +533,7 @@ def audit_dry_run(datasheet_id, token):
     for r in records:
         f = r.get("fields", {})
         url = f.get("导师主页", "")
-        school = f.get("学校名字", "")
+        school = _school_name(f)
         email_field = f.get("导师联系方式", "")
         remark = f.get("备注", "")
         selection_intent = f.get("选导意向（点击选择）", f.get("选导意向", ""))
