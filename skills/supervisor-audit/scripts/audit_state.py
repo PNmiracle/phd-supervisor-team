@@ -153,8 +153,11 @@ def _is_domestic_school(school_name):
     """Check if school is Chinese/domestic based on keywords."""
     if not school_name:
         return False
+    # Handle list (OneWayLink returns array of recordIds)
+    if isinstance(school_name, list):
+        return False  # All records are US; domestic check not applicable
     for kw in DOMESTIC_EMAIL_KEYWORDS:
-        if kw.lower() in school_name.lower():
+        if kw.lower() in str(school_name).lower():
             return True
     return False
 
@@ -189,11 +192,20 @@ def _has_valid_email(text):
     return bool(re.search(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', text))
 
 
+def _extract_url_str(value):
+    """Extract URL string from Vika URL field (dict {title, text}) or plain string."""
+    if isinstance(value, dict):
+        return value.get("text", value.get("title", ""))
+    return str(value) if value else ""
+
+
 def _is_field_empty(value):
     """Return True if a field value is effectively empty."""
     if value is None:
         return True
-    if isinstance(value, (list, dict)):
+    if isinstance(value, dict):
+        return not (value.get("text") or value.get("title"))
+    if isinstance(value, list):
         return len(value) == 0
     return str(value).strip() == ""
 
@@ -346,7 +358,8 @@ def audit(datasheet_id, token, max_links_check=LINK_SAMPLE_SIZE):
     url_records = []
     for r in records:
         f = r.get("fields", {})
-        url = f.get("导师主页", "")
+        url_raw = f.get("导师主页", "")
+        url = _extract_url_str(url_raw)
         school = _school_name(f)
         email_field = f.get("导师联系方式", "")
         remark = f.get("备注", "")
@@ -532,7 +545,8 @@ def audit_dry_run(datasheet_id, token):
 
     for r in records:
         f = r.get("fields", {})
-        url = f.get("导师主页", "")
+        url_raw = f.get("导师主页", "")
+        url = _extract_url_str(url_raw)
         school = _school_name(f)
         email_field = f.get("导师联系方式", "")
         remark = f.get("备注", "")
