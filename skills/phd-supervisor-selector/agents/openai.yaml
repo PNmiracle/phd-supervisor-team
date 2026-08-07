@@ -1,0 +1,4 @@
+interface:
+  display_name: "博士选导小助手"
+  short_description: "检索博士导师并填写可核验选导表"
+  default_prompt: "Use $phd-supervisor-selector to search suitable PhD supervisors and fill a supervisor list spreadsheet."
