@@ -261,11 +261,15 @@ WorkBuddy 不能打开真实浏览器，但可以通过以下方式验证：
 | **线虫/果蝇/酵母模式生物** | 实验室主线使用 C. elegans / Drosophila / Yeast 作为核心模式动物 | 心衰线虫模型、果蝇神经发育——即使涉及目标疾病，模式生物层级不对 |
 | **纯计算生物学（>70% dry lab）** | 研究以生信分析、突变谱解析、计算建模为主，无 wet lab | 纯突变谱分析、纯数据库挖掘——即使方向关键词沾边 |
 | **癌症生物学为主线** | 实验室主线是肿瘤/白血病/癌症机制，目标方向只是副业 | 白血病干细胞为主、iPSC 只是工具——即使有 iPSC 关键词 |
+| **经济/卫生经济学身份标签** | 主页自述或部门身份为 health economist / 卫生经济学家 / 药物经济学家；研究以支付政策(provider payment)、保险福利设计(Medicare Part D)、成本建模(CEA/QALY/ICER)、经济负担为主方向 | 自述 "I am a health economist"；Division of Health Policy and Economics；研究 Part D 覆盖设计、支付激励、成本效果——**即使研究关键词含"理赔数据/药物政策/真实世界"，只要身份标签是经济学家即排除** |
+
+**身份标签陷阱（2026-08-25 实战教训）**：Yuhua Bao 案例——表内研究领域字段写 "Health economist evaluating real-world effects of drug policies... using large claims data"，因含 `claims data / real-world / medication use` 命中方向1正面关键词，第一轮审核误判为 OK。**根因：只看关键词匹配，忽略句首 "Health economist" 身份标签。** 审核时必须先扫身份标签（economist/经济/payment/Part D/福利设计），命中即视为红线信号，再核对是否为主方向——不能因为同时命中"理赔数据"就放行。
 
 **判断方法**：
 1. 打开导师主页，阅读 Research Interests / Publication 列表
 2. 目标方向关键词在主页/论文中出现频率是否 >50%（核心方向 vs "研究方向之一"）
 3. 如果方向定义书有额外的学生专属排除项，一并对照
+4. **先看身份标签，再看关键词**：字段/主页中的 `health economist`、`policy economics`、`payment design`、`cost-effectiveness`、`CEA/QALY/ICER` 是强红线信号，即使同段出现"理赔数据/药物安全/真实世界"等正面词也要以身份标签为准
 
 **注意**：方向定义书中的学生专属排除项由各学生任务单独提供，不写入此通用规则。但 auditor 审核时必须拿到方向定义书原文，独立对照。
 
