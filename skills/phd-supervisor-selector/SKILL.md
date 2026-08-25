@@ -36,7 +36,7 @@ Requires `TAVILY_API_KEY` environment variable. If installed, search automatical
 
 收到任务时，检测数据源：
 
-1. **用户提供 Vika 分享链接**（如 `https://vika.cn/share/shrXXX/dstXXX/viwXXX`）：直接通过 Fusion API 操作 Vika 表格
+1. **用户提供 Vika 分享链接**（如 `https://vika.cn/share/shrXXX/dstXXX/viwXXX`）：直接通过 Fusion API 操作 Vika 表格。**⚠️ 重要（2026-08-19 验证）**：分享链接页面通过 `dataPack` 接口只能看到**当前分享视图**的记录，可能不完整；若要获得完整表（全部视图的全部记录），必须用**个人 API Token** 调用 Fusion API `GET /datasheets/{dstId}/records`。发现差异时优先向用户索要 API Token 做完整读取，不要只依赖分享链接的 dataPack。
 2. **用户上传 `.xlsx` 文件**：操作本地电子表格
 3. **用户同时提供**：优先 Vika 做 CRUD，Excel 做参考/填充源
 
