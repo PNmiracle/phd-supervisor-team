@@ -65,6 +65,45 @@ def vika(method, path, body=None):
 
 ---
 
+## 0.5 新建数据表（新学生 vika链接 为空时）
+
+当用户是「任务发布未进行」的新学生、任务记录里 `vika链接` 字段为空时，需要主动建表。
+
+**关键：Fusion API 支持建表（POST，不是 GET）。** `openapi.vika.cn` 域名无法解析，建表一律走 `api.vika.cn/fusion/v1`。
+
+```python
+# POST /fusion/v1/spaces/{spaceId}/datasheets
+# 字段 type 的 property 规则（与 GET 返回结构一致）：
+#   SingleText → property: {}
+#   OneWayLink → property: {"foreignDatasheetId": "<主表id>"}
+#   Email / Text / URL → 不传 property（传 {} 会报 400 "Invalid value for fields[xxx].property"）
+#   SingleSelect → property: {"options": [{"name": "选项1"}, ...]}
+fields = [
+    {'type':'SingleText','name':'导师','property':{}},
+    {'type':'OneWayLink','name':'学校名字','property':{'foreignDatasheetId':'dstMNzQU9Aa58DpgW3'}},
+    {'type':'SingleText','name':'Department','property':{}},
+    {'type':'Email','name':'导师联系方式'},
+    {'type':'Text','name':'导师研究领域'},
+    {'type':'URL','name':'导师主页'},
+    {'type':'URL','name':'博士申请信息'},
+    {'type':'Text','name':'备注'},
+    {'type':'URL','name':'其他导师信息'},
+    {'type':'SingleSelect','name':'选导意向（点击选择）','property':{'options':[{'name':'优先套磁'},{'name':'第二批套磁'},{'name':'完全不考虑'}]}},
+]
+data = json.dumps({'name':'XXX-Supervisor List','fields':fields}).encode()
+req = Request('https://api.vika.cn/fusion/v1/spaces/{spaceId}/datasheets', data=data, method='POST')
+# 返回 data.id 即新表 datasheetId
+```
+
+**注意**：
+- 建表后会自动附带约 3 条空记录，写入前先 GET 找出 `导师` 为空的行并 DELETE。
+- 字段类型名参考：`SingleText`、`Text`、`URL`、`Email`、`SingleSelect`、`OneWayLink`、`Checkbox`、`Attachment`。注意 `SingleText` 和 `Text` 是不同类型。
+- 学生类型判断：先读某个同 space 模板表（如「模板⭐️」）的字段，看 `学校名字` OneWayLink 的 `foreignDatasheetId` 指向哪个主表。指向 `dstMNzQU9Aa58DpgW3`（学校主表_2027QS排名）＝新学生统一主表模式。
+- **Fusion API 无法生成分享链接**（share 接口 404）。只能回填 `https://vika.cn/workbench/{dstXXX}/{viwXXX}` 格式的 workbench 链接，分享链接需用户在网页端点「分享」手动生成。
+- 视图 ID 获取：`GET /datasheets/{dst}/views`。
+
+---
+
 ## 1. View Table Schema
 
 ```python
@@ -126,8 +165,8 @@ result = vika("GET", "/records?maxRecords=200&pageSize=200&cellFormat=string")
 
 ```python
 new_records = [
-    {"fields": {"导师": "张三", "Department": "心理学院(XX大学)", "备注": "教授；决策研究；比较匹配～", "待确认导师": "新加待check"}},
-    {"fields": {"导师": "李四", "Department": "商学院(YY大学)", "备注": "副教授；消费者行为；比较匹配～", "待确认导师": "新加待check"}},
+    {"fields": {"导师": "张三", "Department": "心理学院(XX大学)", "备注": "教授；决策研究。", "待确认导师": "新加待check"}},
+    {"fields": {"导师": "李四", "Department": "商学院(YY大学)", "备注": "副教授；消费者行为。", "待确认导师": "新加待check"}},
 ]
 result = vika("POST", "/records", {"records": new_records, "fieldKey": "name"})
 print(f"Created {len(result['data']['records'])} records")
@@ -140,6 +179,48 @@ for i in range(0, len(all_records), 10):
     vika("POST", "/records", {"records": batch, "fieldKey": "name"})
     time.sleep(0.3)
 ```
+
+### ⚠️ OneWayLink 字段必须为数组（2026-08-20 实测教训）
+
+**根因**：Fusion API 对 OneWayLink 字段的值类型要求极其严格——传入字符串 `"recordId"` 或 `{"recordId":"..."}` 都报 400，但错误信息没有提示。调试过程浪费了多轮排查。
+
+**正确格式**：OneWayLink 字段的值必须是**只含 recordId 字符串的数组**，不带 `recordId` 键名：
+
+```python
+# ✅ 正确：数组，只含 recordId 字符串
+{"fields": {"非美国地区学校": ["recKHysoFjpF8"]}}
+
+# ❌ 错误：字符串（400）
+{"fields": {"非美国地区学校": "recKHysoFjpF8"}}
+
+# ❌ 错误：对象（400）
+{"fields": {"非美国地区学校": {"recordId": "recKHysoFjpF8"}}}
+
+# ❌ 错误：字段ID键名 + 数组（400）
+{"fields": {"fldXXX": ["recKHysoFjpF8"]}}
+```
+
+**字段键名**：必须用**字段名称**（中文），不能用字段 ID（`fldXXX`）。POST 时 `fieldKey="name"` 是默认值，可省略。
+
+### ⚠️ POST 创建带 OneWayLink 字段时**不能**包含 fieldKey 参数（2026-08-21 实测教训）
+
+**根因**：当请求体中包含 OneWayLink 字段且同时传递 `fieldKey` 参数时，API 会返回 `api_params_instance_fields_error`（HTTP 500），即使空记录也报错。这个错误信息完全没有提示是 `fieldKey` 导致的。
+
+**正确格式**：创建带 OneWayLink 字段的记录时，**不要**在请求体中包含 `fieldKey` 参数：
+
+```python
+# ✅ 正确：不带 fieldKey
+body = {"records": [{"fields": {"导师": "张三", "非美国地区学校": ["recXXX"]}}]}
+result = vika("POST", "/records", body)
+
+# ❌ 错误：带 fieldKey 会导致 500 错误
+body = {"records": [{"fields": {"导师": "张三", "非美国地区学校": ["recXXX"]}}], "fieldKey": "name"}
+result = vika("POST", "/records", body)  # HTTP 500 api_params_instance_fields_error
+```
+
+**注意**：这个限制**仅影响 POST 创建**。PATCH 更新时可以正常使用 `fieldKey="name"`。
+
+**POST 创建时能否同时写 OneWayLink？** 是的，但必须不带 `fieldKey` 参数（如上所示）。
 
 ---
 
@@ -455,7 +536,9 @@ body = {
 2. PATCH the record WITHOUT `fieldKey` to set `学校名字: [school_record_id]`
 3. `Location` and `QS排名` will auto-fill after school link is set
 
-**Note**: This only works for PATCH, NOT for POST.
+**POST 创建时也可以写 OneWayLink**（2026-08-20 实测）：字段名做 key + 数组值 + **不带 fieldKey 参数**即可成功，无需分两步。
+
+⚠️ **关键提醒**（2026-08-21 实测）：POST 创建带 OneWayLink 字段时，**绝对不能**在请求体中包含 `fieldKey` 参数，否则会返回 `api_params_instance_fields_error`（HTTP 500），即使空记录也报错。这个错误信息完全没有提示是 `fieldKey` 导致的。
 
 ---
 
@@ -488,6 +571,19 @@ See section 4.2 above. URL-type fields require field IDs without `fieldKey` para
 - Use `fieldKey: "name"` for Chinese field names (except for URL field PATCH)
 - Always `strip()` names before comparison
 - URL fields accept plain strings (API wraps them)
+
+### 长文本批量 PATCH 连接重置（2026-08-25 实战教训）
+
+**现象**：一次 PATCH 10 条备注（每条 50-150 字长文本）时，`Connection reset by peer`（Errno 54），整批失败、0 条生效。同样的请求内容改小批次后成功。
+
+**原因**：请求体过大 + 网络不稳定，Vika API 或中间链路断开连接。**返回 200 不一定成功，连接重置则一定失败**——PATCH 后必须 GET 回读确认。
+
+**正确做法**：
+1. **每批 5 条**（备注长文本场景，不要用满 10 条上限）
+2. 请求加 `timeout=30`
+3. 加重试循环（3 次，间隔 1.5s）
+4. PATCH 后 GET 回读全部记录，确认每条都是新内容
+5. 批量修复前先做全量备份（`GET /records` 全量存 JSON 到本地），删除/修改不可逆时尤其重要
 
 ---
 

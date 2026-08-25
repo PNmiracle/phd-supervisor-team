@@ -102,24 +102,33 @@ If a profile has no public email but has a contact button, message form, or offi
 
 Write `备注` from profile content, not generic claims. Use short Chinese phrases:
 
-`职称；研究关键词（可带主页原文出处）；匹配度标识`
+`职称；研究关键词（可带主页原文出处）`
 
-The first part should usually be title or eligibility status; the second part should be concrete research evidence (optionally with original quotes from the supervisor's homepage); the third part should be one of the three match identifiers. Keep it concise enough to read in a spreadsheet cell.
+The first part should usually be title or eligibility status; the second part should be concrete research evidence (optionally with original quotes from the supervisor's homepage); optionally a third part with `你可以备选一下～` only when the supervisor's research partially matches but also diverges from the student's direction.
 
 Allowed examples:
 
-- `副教授；可持续供应链、产业协作、循环经济；比较匹配～`
-- `教授；文物材料、科技考古、保护研究；可以备选一下～`
-- `研究助理教授；遗产研究、澳门史、离散社群；需确认带博；可以备选一下～`
-- `讲师；空间叙事、城市遗产、视觉文化；英国体系下可考虑；比较匹配～`
-- `教授；环境风险、政策评估、气候金融；"research focuses on climate finance and policy evaluation"；建议多看看呢～`
-- `Reader；胃肠癌政策评估、健康经济学；有监督经验但名额需确认；比较匹配～`
+- `副教授；可持续供应链、产业协作、循环经济。`
+- `教授；文物材料、科技考古、保护研究。`
+- `研究助理教授；遗产研究、澳门史、离散社群；需确认带博。`
+- `讲师；空间叙事、城市遗产、视觉文化。`
+- `教授；环境风险、政策评估、气候金融；"research focuses on climate finance and policy evaluation"。`
+- `Reader；胃肠癌政策评估、健康经济学；有监督经验但名额需确认。`
+- `副教授；做心血管药物流行病学，但也有老年用药安全的方向，你可以备选一下～`
 
 Avoid:
 
 - `主页写明`, `公开资料`, `方向集中在`.
 - `方向一优先`, `方向二备选`, `方向三优先`.
 - Long explanations, copied profile blurbs, or unexplained English phrases when Chinese notes are requested.
+- Emoji symbols (🔥👍⚠️✅ etc.) — never use in notes
+- Direction book internal references (方向1/方向2/TOP/SECONDARY) — students don't know about the direction book
+- Internal tool names (Vika/表格/源数据) in notes
+- Correction records (职称修正/Vika写/已确认) in notes
+
+**关于「导师主页」列 vs 备注中的文章链接：**
+- `导师主页` 列必须填学校官网的导师个人 URL（禁止 Google Scholar / ResearchGate / PubMed 等第三方平台）
+- 当导师主页信息极少（没有展现文章）时，在备注中补偿文章链接：`文章看这里 https://scholar.google.com/...`
 
 Use careful risk labels instead of hard rejection language when the student may still want to inspect the person:
 
@@ -208,5 +217,5 @@ Before final delivery:
 备注中补充的外部链接需使用完整 URL，放在备注末尾，用分号与前文分隔：
 
 ```
-教授；自然语言处理、知识图谱；百度学者 https://xueshu.baidu.com/...；可往NLP方向靠。
+教授；自然语言处理、知识图谱；百度学者 https://xueshu.baidu.com/...
 ```

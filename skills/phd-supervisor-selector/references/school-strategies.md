@@ -540,6 +540,11 @@ Format: Architecture + Layer + Access method + Endpoints + Failures
 - **Failed**: —
 - **Last verified**: 2026-06-26
 
+##### CUHK(SZ) 环境/双碳方向补充（2026-08-17 验证）
+- 理工学院 SSE `sse.cuhk.edu.cn/faculty/{slug}`、公共政策学院 SPP `spp.cuhk.edu.cn/teacher/{id}`、人文社科学院 HSS `hss.cuhk.edu.cn/teacher/{id}`、数据科学学院 SDS `sds.cuhk.edu.cn/teacher/{id}` 均为可抓取静态页；个人网站走 `myweb.cuhk.edu.cn/{slug}`。
+- 环境/能源/双碳/公共政策/空间数据相关院系：SSE（能源经济、智能电网）、SPP（能源政策、可持续转型）、HSS（计算可持续、城市学、地理空间分析）、SDS（时空统计）。
+- 研究生院 `gs.cuhk.edu.cn/page/16/`（研究型专业列表）、申请 `pgapply.cuhk.edu.cn`。
+
 #### NYU Shanghai
 - **Architecture**: Static HTML
 - **Layer**: L1
@@ -568,6 +573,14 @@ Format: Architecture + Layer + Access method + Endpoints + Failures
 - **博士申请信息**: IPE 项目页 `pcc.hkust-gz.edu.cn/postgraduate/program-catalog/innovation-policy-and-entrepreneurship-5` + 申请系统 `fytgs.hkust-gz.edu.cn`（WebFetch 可渲染）
 - **Last verified**: 2026-08-05
 
+##### HKUST(GZ) 环境/双碳方向补充（2026-08-17 验证）
+- 社会枢纽 CNCC/UGOD 教师列表页（WordPress 可抓取，含姓名/职称/邮箱 + facultyprofiles ?id）：
+  - CNCC 碳中和与气候变化 `soch.hkust-gz.edu.cn/academics/cncc/faculty/`
+  - UGOD 城市治理与设计 `soch.hkust-gz.edu.cn/academics/ugod/faculty/`
+- 功能枢纽 SEE 教师页 `funh.hkust-gz.edu.cn/zh/academics/sustainable-energy-and-environment/faculty-members/` 为 SPA（正文 "Loading"），无法抓取名单；SEE 导师个人页可用 facultyprofiles `?id=X`（如郑君瑜 id=243）。
+- **facultyprofiles ?id 交叉核对方法**：直接 WebSearch `"[导师名] facultyprofiles.hkust-gz.edu.cn"` 可拿到含真实姓名/职称/邮箱的搜索结果摘要，比抓 SPA 壳可靠；再与 WordPress 学域列表核对 id。
+- 注意 UGOD 有同名双条目（Lingbo LIU id=737 与 id=740，仅 740 带邮箱），写表前核对 email 与 id 匹配。
+
 #### BNBU / UIC (北师香港浸会大学, Zhuhai)
 - **Architecture**: Static HTML (general) + Vue SPA (FHSS comm department)
 - **Layer**: L1 (general) / L3 (FHSS comm)
@@ -577,6 +590,14 @@ Format: Architecture + Layer + Access method + Endpoints + Failures
 - **Failed**: No psychology PhD program; behavioral decision research happens in math/stats depts but not a dedicated track; individual HTML pages don't exist for comm (all SPA hash-routed)
 - **⚠️ PhD supervision**: UIC is primarily a teaching institution. MPhil/PhD offered through HKBU co-supervision. Assistant Professors may have limited supervision capacity.
 - **Last verified**: 2026-07-01
+
+##### BNBU/UIC 环境/数据方向补充（2026-08-17 验证）
+- **研究型硕博专业仅 6 个**：计算机科学、概率论与数理统计、生物学、应用数学、传播学、会计学与企业管理（仅博士）。**无环境科学/公共政策独立专业**，环境方向需挂靠"生物学"（生命科学系），空间/统计方向挂靠"概率论与数理统计"。
+- 研究生院导师名录页（静态 HTML，含姓名/职称/研究方向/邮箱，可抓取）：
+  - `gs.bnbu.edu.cn/graduate/graduate1/yjxyjskc/Probability_and_Mathematical_Statistics.htm`（统计 PMS）
+  - 类似 `.../Biology.htm`、`.../Computer_Science.htm` 等
+- 教师个人页多为 SPA：`fst.bnbu.edu.cn/xxx/faculty/faculty.htm#/{username}/en`（hash 锚点，抓取只有导航栏）；`staff.uic.edu.cn/{username}/cn` 为旧域名遗留静态页（仍有效但内容为旧版）。写表时优先用 `gs.bnbu.edu.cn` 导师名录页，或 `staff.uic.edu.cn` 旧页 + 备注标注。
+- 申请系统 `rpgadmission.bnbu.edu.cn`。
 
 #### Duke Kunshan University
 - **Architecture**: Static HTML
@@ -595,6 +616,12 @@ Format: Architecture + Layer + Access method + Endpoints + Failures
 - **Failed**: No psychology-specific PhD; business school only
 - **Last verified**: 2026-06-26
 
+##### UNNC 环境/地理/ESG 方向补充（2026-08-17 验证）
+- 理工科学院 FoSE 个人页格式：`nottingham.edu.cn/en/engineering/staffprofile/{slug}.aspx`、`nottingham.edu.cn/en/people/match.aspx?name={slug}`（均可抓取）。地理科学系、建筑与建筑环境系、化学与环境工程系在 FoSE 下。
+- 研究门户（Pure，可抓取）：`research.nottingham.edu.cn/en/persons/{slug}`。
+- NUBS China 个人页：`nottingham.edu.cn/en/Business/People/Profile.aspx?id={uuid}`。
+- 博士申请：`nottingham.edu.cn/en/study-with-us/postgraduate-research/`；申请系统 `oaas.nottingham.edu.cn`。
+
 #### XJTLU (Xi'an Jiaotong-Liverpool)
 - **Architecture**: Static HTML
 - **Layer**: L1
@@ -602,6 +629,11 @@ Format: Architecture + Layer + Access method + Endpoints + Failures
 - **Key endpoint**: https://www.xjtlu.edu.cn/en/academics/schools/ibss
 - **Failed**: No psychology department; IBSS business PhD only
 - **Last verified**: 2026-06-26
+
+##### XJTLU 环境/城市规划/ESG 方向补充（2026-08-17 验证）
+- **研究门户（Pure，全校教师统一入口，可抓取，含研究方向/邮箱）**：`scholar.xjtlu.edu.cn/en/persons/{slug或uuid}`。这是写 XJTLU 导师主页的首选来源。
+- 相关院系：理学院健康与环境科学系 HES（大气/温室气体/全球变化）、设计学院城市规划与设计系 UPD（GIS/可持续城市）、IBSS（ESG/供应链/气候计量经济）、人文社科学院中国研究/国际研究（气候政策）。
+- 博士申请：`xjtlu.edu.cn/en/admissions/doctoral/how-to-apply`（全年开放，学费9.9万/年）。博士专业含环境科学、商学、城市规划与设计等。
 
 ### 🇳🇿 New Zealand
 

@@ -65,13 +65,16 @@ Exclude from the main table unless strong contrary evidence exists:
 
 ## Fit Judgement
 
-Fit can be strong even when keywords are indirect, if the supervisor's research methods, objects, or field can support the student's project. Use these identifiers at the end of the three-part remark:
+Fit can be strong even when keywords are indirect, if the supervisor's research methods, objects, or field can support the student's project.
 
-- `建议多看看呢～`: directly matches the student's preferred research object and method.
-- `比较匹配～`: adjacent field, likely useful but not exact.
-- `可以备选一下～`: has one useful component but leans toward a risk area.
-- `需确认带博`: profile is promising but eligibility is unclear (used as second segment, not as the ending identifier).
-- `教学岗风险`, `研究岗风险`, `更新偏旧`, etc. for concise risks (used as second segment, not as the ending identifier).
+**When to use `你可以备选一下～`** (only when both conditions are met):
+- Bottom line: supervisor's research does NOT touch anything the student absolutely won't consider
+- Trigger: research partially matches the student's direction but also diverges, worth letting the student consider
+
+Correct usage:
+- `教授；做心血管药物流行病学，但也有老年用药安全的研究方向，你可以备选一下～`
+
+**Never use verdict labels** like `建议多看看`、`比较匹配` — these are forbidden. The remark should contain title, research direction, and optionally the `你可以备选一下～` note when the trigger condition is met. Let the student judge fit from the research description.
 
 Do not overfit by title alone. Check publications, projects, current research, supervised students, and program requirements where possible.
 
@@ -185,8 +188,8 @@ C 级如确有特殊推荐理由（如方向极度契合且该方向无其他导
 - **佐证规则**：若通过并行搜索多个页面（如百度学者+论文+新闻）推论出导师研究方向符合学生方向，而该信息在导师主页上无法看到，则必须将对应的外部链接放在备注中作为佐证
 
 备注中的补充信息格式示例：
-- `教授；自然语言处理、知识图谱、大模型应用；主页信息较少，百度学者页 https://xueshu.baidu.com/... 显示主要方向为 NLP；建议多看看呢～`
-- `副教授；文化遗产保护、建筑史；无个人主页，百度百科 https://baike.baidu.com/... 显示研究方向为古建筑保护；可往遗产保护方向靠。`
+- `教授；自然语言处理、知识图谱、大模型应用；主页信息较少，百度学者页 https://xueshu.baidu.com/... 显示主要方向为 NLP。`
+- `副教授；文化遗产保护、建筑史；无个人主页，百度百科 https://baike.baidu.com/... 显示研究方向为古建筑保护。`
 
 ### 国内学校搜索优先级
 
