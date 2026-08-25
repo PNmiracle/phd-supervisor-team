@@ -67,14 +67,17 @@ Exclude from the main table unless strong contrary evidence exists:
 
 Fit can be strong even when keywords are indirect, if the supervisor's research methods, objects, or field can support the student's project.
 
-**When to use `你可以备选一下～`** (only when both conditions are met):
+**When to use `可以备选一下呢～` / `可以往XX方向靠～`** (only when both conditions are met):
 - Bottom line: supervisor's research does NOT touch anything the student absolutely won't consider
 - Trigger: research partially matches the student's direction but also diverges, worth letting the student consider
 
-Correct usage:
-- `教授；做心血管药物流行病学，但也有老年用药安全的研究方向，你可以备选一下～`
+Direction-fit phrases (`和你的XX方向能搭上`/`有交叉`/`比较对口`) are also allowed as objective overlap descriptions — use `你`, not `学生`. They can be used alone or combined with the backup marker.
 
-**Never use verdict labels** like `建议多看看`、`比较匹配` — these are forbidden. The remark should contain title, research direction, and optionally the `你可以备选一下～` note when the trigger condition is met. Let the student judge fit from the research description.
+Correct usage:
+- `教授；做心血管药物流行病学，但也有老年用药安全的研究方向；和你的药流方向能搭上，可以备选一下呢～`
+- `副教授；做药物经济学和卫生技术评估，也有糖尿病慢病管理方向；可以往慢病预测模型方向靠～`
+
+**Never use verdict labels** like `建议多看看`、`比较匹配`、`高度相关`、`很匹配`、`完美匹配`、`匹配度最高`、`匹配面最广`、`很契合`、`直接对话`、`很有交集`、`核心人选` — these are forbidden machine-scoring language. The remark should contain title, research direction, and optionally a direction-fit phrase or backup marker when the trigger condition is met. Let the student judge fit from the research description.
 
 Do not overfit by title alone. Check publications, projects, current research, supervised students, and program requirements where possible.
 

@@ -104,7 +104,9 @@ Write `备注` from profile content, not generic claims. Use short Chinese phras
 
 `职称；研究关键词（可带主页原文出处）`
 
-The first part should usually be title or eligibility status; the second part should be concrete research evidence (optionally with original quotes from the supervisor's homepage); optionally a third part with `你可以备选一下～` only when the supervisor's research partially matches but also diverges from the student's direction.
+The first part should usually be title or eligibility status; the second part should be concrete research evidence (optionally with original quotes from the supervisor's homepage). Two optional endings are allowed:
+1. **Direction-fit phrase**: describe the overlap with the student's direction in an objective way (e.g. `和你的XX方向能搭上`, `和你的XX方向有交叉`, `与XX方向比较对口`) — helps the student decide whether to reach out. Use `你`, not `学生`.
+2. **Backup marker**: `可以备选一下呢～` or `可以往XX方向靠～` only when the supervisor's research partially matches but also diverges from the student's direction. Machine-scoring labels (`高度相关`/`很匹配`/`完美匹配`/`匹配度最高`/`匹配面最广`/`很契合`/`直接对话`/`很有交集`/`核心人选`) remain forbidden.
 
 Allowed examples:
 
@@ -114,7 +116,8 @@ Allowed examples:
 - `讲师；空间叙事、城市遗产、视觉文化。`
 - `教授；环境风险、政策评估、气候金融；"research focuses on climate finance and policy evaluation"。`
 - `Reader；胃肠癌政策评估、健康经济学；有监督经验但名额需确认。`
-- `副教授；做心血管药物流行病学，但也有老年用药安全的方向，你可以备选一下～`
+- `副教授；做心血管药物流行病学，但也有老年用药安全的方向；和你的药流方向能搭上，可以备选一下呢～`
+- `教授；心血管疾病流行病学，做亚临床动脉粥样硬化、肥胖和代谢综合征的人群研究；和慢病预防方向能搭上。`
 
 Avoid:
 
@@ -125,6 +128,7 @@ Avoid:
 - Direction book internal references (方向1/方向2/TOP/SECONDARY) — students don't know about the direction book
 - Internal tool names (Vika/表格/源数据) in notes
 - Correction records (职称修正/Vika写/已确认) in notes
+- Machine-scoring labels (高度相关/很匹配/完美匹配/匹配度最高/匹配面最广/很契合/直接对话/很有交集/核心人选)
 
 **关于「导师主页」列 vs 备注中的文章链接：**
 - `导师主页` 列必须填学校官网的导师个人 URL（禁止 Google Scholar / ResearchGate / PubMed 等第三方平台）
