@@ -2,9 +2,22 @@
 
 Session-aware search coordination with state tracking, smart prioritization, and standardized sub-agent dispatch. Read this before starting ANY search task.
 
-## 1. Check for Existing State (FIRST STEP)
+## 0. Confirm Current Student (BEFORE ANY STATE ACCESS) — HARD GATE
 
-Before searching any school, check for a state file:
+Before touching `search-state/` or any existing state file, you MUST establish the current student's identity from the **current task message**, not from the directory listing.
+
+**Hard rules:**
+- `{student_name}` must come from the user's **current message** explicitly stating who this task is for (e.g., "帮 X 同学筛导师", "这是 X 的方向清单").
+- **NEVER** run `ls search-state/` and pick a file to "resume". The directory contains state files from dozens of past students; treating any of them as the current context is the #1 cause of cross-student contamination (wrong directions, wrong Vika table, wrong school list loaded).
+- **NEVER** `cat` a state file whose name does not match the confirmed current student.
+- If the current message does not name a student, you MUST ask the user "这是哪位同学的任务？" before reading any state file. Do not guess, do not proceed on assumption.
+- Only after the name is confirmed may you `cat` that one file. If it doesn't exist, create a new one — do not "fall back" to a different student's file.
+
+> ⚠️ **复盘教训（2026-08-28）**：用户发来新学生的列表，agent 未确认姓名就直接 resume 了目录里一份完整的历史 state 文件（含方向、Vika 表、学校优先级），导致整轮操作指向错误学生。根因：skill 把"resume existing state"设为第一步却没规定姓名来源，agent 顺手 ls 了目录就误命中。
+
+## 1. Check for Existing State
+
+Before searching any school, check for a state file — but **only after Step 0 has confirmed the current student's name**:
 
 ```bash
 # Path: {SKILL_DIR}/search-state/{student_name}.md
