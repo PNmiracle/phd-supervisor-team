@@ -42,6 +42,33 @@ When only a title is visible and no other supervision evidence is available:
 - Australia and New Zealand: `Lecturer` and `Senior Lecturer` can be considered only with supporting evidence or when no better match exists; note the supervision risk.
 - For old UK-system titles used outside the UK, judge by the institution's actual rule and profile evidence rather than the title word alone.
 
+## 🔴 地区默认排除：提到「欧洲」时一律不看挪威与瑞典（2026-10-23 用户明确定调，焊死）
+
+**用户原话：「提到欧洲的时候除非是特意说明，绝对不看挪威和瑞典。」**
+
+**规则**：用户（或方向书）给出的范围词里出现「欧洲」时，**挪威（Norway）与瑞典（Sweden）默认整体排除**——不搜索、不写入、不进候选池、不计入「覆盖 N 人」的基数。
+
+**触发本条的范围词**（命中任一即生效，不限于这些写法）：
+
+- 中文：欧洲、欧陆、欧洲大陆、欧洲其他地区、北欧、欧盟
+- 英文：Europe、continental Europe、EU、Nordic、Scandinavia
+
+> `北欧` / `Nordic` / `Scandinavia` 同样默认排除——这两个词本来就包含挪威与瑞典，不存在「北欧不等于挪瑞」的解释空间。
+
+**仅有的纳入条件**：用户**当次明确点名**挪威或瑞典的具体学校 / 具体导师，或明确说「挪威瑞典也可以」「含北欧」。方向书里若原文点出挪威/瑞典的具体学校，视为已点名；只写「欧洲」「北欧」不算。
+
+**不影响其他地区**：本条只排除挪威与瑞典。英国、爱尔兰、德国、荷兰、丹麦、芬兰、瑞士、奥地利等照常按范围处理（本 skill 里英国/爱尔兰通常与「欧洲」并列提及，本条不波及其余欧洲国家）。
+
+**三个阶段的执行口径**：
+
+| 阶段 | 动作 |
+|---|---|
+| 搜索 | 列候选校时直接剔除挪威/瑞典全部学校，不派子代理、不抓取 |
+| 写入 | 发现挪威/瑞典的导师一律**不写入**；已在表里的历史记录不属本条范围，但要在交付报告里单独列出并问用户是否处理 |
+| 审核 | 表内出现挪威/瑞典记录且用户从未点名 → 标为「范围外（默认排除）」并在报告里点出，不要静默放过也不要自作主张删除 |
+
+**不确定时问用户**，不要自己推断「这次应该可以」。本条与用户其他地区要求叠加时，**以更严格的为准**。
+
 ## Usually Acceptable Titles
 
 `Chair Professor`, `Professor`, `Associate Professor`, `Assistant Professor`, `Reader`, and equivalent full-time research/teaching-and-research faculty titles.
