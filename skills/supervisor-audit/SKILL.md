@@ -89,6 +89,10 @@ description: Automated audit scripts for the PhD supervisor selection workflow. 
 | 6b 硬排除检查是否执行 | 记录的研究方向不涉及任何通用硬排除项 | 线虫模型导师被写入（6b 被跳过） |
 | 6c 方向核心度是否判断 | 备注中的方向描述与导师主页主线一致 | iPSC 只是副业却被当作核心方向 |
 | 选导顾问是否偷懒放行 | 备注含"可以备选一下"但方向明显不核心 | 用"备选"标签掩盖方向不匹配 |
+| 🔴 **国家黑名单是否执行**（2026-11-17 新增） | 表内**不得出现**瑞典（Lund/Uppsala/Stockholm/KTH/Chalmers/Gothenburg/Linköping/Umeå…）、挪威（Oslo/Bergen/NTNU/Tromsø/NMBU…）、葡萄牙（Lisbon/Porto/Coimbra/NOVA/ISCTE…）的学校，除非用户当次说出该国名或该国具体校名 | 郭书睿表里出现 2 条瑞典 Lund 记录——「澳欧 QS 50-200 可看」被误当成点名北欧 |
+| 🎓 **顶尖名校是否被排除**（2026-11-17 新增） | 表内不得出现 Oxford / Cambridge / Stanford / MIT / Harvard / 美国 Top 15，除非用户当次单独点名 | 因为「QS 前 100」覆盖到就把牛剑搜进来 |
+
+> ⚠️ **国家黑名单的判定要点**：`欧洲 QS 前 100`、`澳欧可看`、`欧陆不含英国`、`北欧 N 所` 这类**区域级写法不构成点名**；只有**国家名**或**该国具体学校名**才算。一带一路、欧盟项目、QS 排名带全表等路径同样要过黑名单。
 
 ### P0 判定标准
 

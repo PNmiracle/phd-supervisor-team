@@ -84,11 +84,15 @@ Updated: {ISO timestamp}
 | 剔除项 | 具体学校 | 例外 |
 |---|---|---|
 | **顶尖名校**（层级型） | 牛津 Oxford、剑桥 Cambridge、Stanford、MIT、Harvard、美国 Top 15（US News） | 仅当用户**当次单独点名**某校（「加上剑桥」）才把那所放回 |
-| **欧洲三国的全部学校**（地区型） | 挪威、瑞典、葡萄牙 | 仅当用户**当次明确点名**该国学校/导师，或明说「含北欧」「葡萄牙也可以」 |
+| **国家黑名单**（国家型） | 🇸🇪 瑞典：**Lund**、Uppsala、Stockholm、KTH、Chalmers、Gothenburg、Linköping、Umeå、Örebro、Karolinska<br>🇳🇴 挪威：Oslo、Bergen、NTNU、Tromsø、NMBU、Stavanger<br>🇵🇹 葡萄牙：Lisbon、Porto、Coimbra、NOVA、ISCTE、Minho、Aveiro | 仅当用户**当次说出国家名**或**该国具体学校名**（「加上 Lund」「葡萄牙也可以」）才放开 |
 
-两条会**叠加**：用户说「欧洲 QS 前 100」→ 既要剔除牛剑，也要剔除挪瑞葡。
-「QS 前 xxx」这类范围描述**不构成点名**，一律按默认排除执行。
-规则正文与 2026-11-17 失效复盘：`selection-rules.md`。
+**「特意说明」的认定标准**（2026-11-17 加固）：只有**国家名**或**该国具体学校名**才算点名。
+`欧洲 QS 前 100` / `澳欧 QS 50-200 可看` / `欧陆不含英国` / `北欧 6 所` / `欧洲开扫` / `QS 前 xxx` —— **全都不算点名**，一律按排除执行。
+
+两条会**叠加**：用户说「欧洲 QS 前 100」→ 既要剔除牛剑，也要剔除黑名单三国。
+**任何路径都要过国家黑名单**：一带一路（葡萄牙是海上丝路国家）、欧盟项目、QS 排名带全表、学科国际合作网络——不要求「欧洲」两个字出现。
+**续传也要过滤**：`search-state` 里的待做队列可能是规则生效前写的，开工前先拿黑名单扫一遍。
+规则正文与 2026-11-17 郭书睿翻车复盘：`selection-rules.md`。
 
 Before diving into individual schools, spend 2 minutes sorting the target school list by expected yield:
 
